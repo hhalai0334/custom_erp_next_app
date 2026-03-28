@@ -1,0 +1,67 @@
+[
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 1,
+  "modified": "2025-05-30 20:28:33.486860",
+  "name": "Mobile.Login",
+  "restrict_to_domain": null,
+  "role_name": "Mobile.Login",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 1,
+  "modified": "2025-05-30 20:28:26.720598",
+  "name": "Mobile.Scan",
+  "restrict_to_domain": null,
+  "role_name": "Mobile.Scan",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 1,
+  "modified": "2025-05-30 20:28:12.747376",
+  "name": "Mobile.Inventory",
+  "restrict_to_domain": null,
+  "role_name": "Mobile.Inventory",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 1,
+  "modified": "2025-05-30 20:30:25.391234",
+  "name": "Mobile.Inventory.Stock",
+  "restrict_to_domain": null,
+  "role_name": "Mobile.Inventory.Stock",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 1,
+  "modified": "2025-06-01 01:37:43.381717",
+  "name": "Mobile.Setting.Stock",
+  "restrict_to_domain": null,
+  "role_name": "Mobile.Setting.Stock",
+  "two_factor_auth": 0
+ }
+]
