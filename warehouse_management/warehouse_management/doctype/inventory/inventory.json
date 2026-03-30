@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-05-11 10:43:59.159045",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "inventory_form_section",
+  "inventory_description",
+  "inventory_date",
+  "inventory_warehouse",
+  "inventory_items"
+ ],
+ "fields": [
+  {
+   "fieldname": "inventory_form_section",
+   "fieldtype": "Section Break",
+   "label": "Inventory Form"
+  },
+  {
+   "fieldname": "inventory_description",
+   "fieldtype": "Data",
+   "label": "Description",
+   "length": 255,
+   "reqd": 1
+  },
+  {
+   "fieldname": "inventory_date",
+   "fieldtype": "Datetime",
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "inventory_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "inventory_items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Inventory Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-03-30 17:57:33.481963",
+ "modified_by": "Administrator",
+ "module": "Warehouse Management",
+ "name": "Inventory",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

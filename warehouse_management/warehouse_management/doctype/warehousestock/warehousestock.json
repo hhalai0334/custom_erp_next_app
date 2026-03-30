@@ -1,7 +1,8 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
- "creation": "2026-03-28 09:44:59.531609",
+ "creation": "2026-03-30 11:00:13.275226",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -58,7 +59,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-28 09:47:13.105678",
+ "modified": "2026-03-30 16:54:45.417035",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "WarehouseStock",
