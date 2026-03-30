@@ -249,10 +249,19 @@ fixtures = [
     },
     {
         "dt": "Custom Field",
-        "filters": [["dt", "=", "Item"]]
+        "filters":[["dt","in",["Item","Warehouse"]]]
     },
     {
         "dt": "DocType",
         "filters": [["module", "=", "Warehouse Management"]]
+    },
+{
+        "dt": "Property Setter",
+        "filters": [
+            ["doc_type", "=", "Warehouse"]
+        ]
     }
 ]
+override_doctype_class = {
+    "Warehouse": "warehouse_management.overrides.warehouse.CustomWarehouse"
+}
