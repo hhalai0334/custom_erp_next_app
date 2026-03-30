@@ -254,12 +254,6 @@ fixtures = [
     {
         "dt": "DocType",
         "filters": [["module", "=", "Warehouse Management"]]
-    },
-{
-        "dt": "Property Setter",
-        "filters": [
-            ["doc_type", "=", "Warehouse"]
-        ]
     }
 ]
 override_doctype_class = {
