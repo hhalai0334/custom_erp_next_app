@@ -1,0 +1,136 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-08-30 15:26:42.215815",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "main_section",
+  "user",
+  "to_email",
+  "lang",
+  "auto_merge",
+  "auto_open_on_scan",
+  "default_encoding",
+  "default_label",
+  "default_barcode",
+  "default_days",
+  "bluetooth_type",
+  "show_available_stock",
+  "show_all_products"
+ ],
+ "fields": [
+  {
+   "fieldname": "main_section",
+   "fieldtype": "Section Break",
+   "label": "Main"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "to_email",
+   "fieldtype": "Data",
+   "label": "To Email"
+  },
+  {
+   "default": "English",
+   "fieldname": "lang",
+   "fieldtype": "Select",
+   "label": "Language",
+   "options": "English\nBosnian\nCroatian\nBulgarian\nCzech\nDanish\nDutch\nEstonian\nFinnish\nFrench\nGerman\nGreek\nHungarian\nIrish\nItalian\nLatvian\nLithuanian\nMaltese\nPolish\nPortuguese\nRomanian\nSerbian\nSlovak\nSlovenian\nSpanish\nSwedish"
+  },
+  {
+   "default": "No",
+   "fieldname": "auto_merge",
+   "fieldtype": "Select",
+   "label": "Auto Merge",
+   "options": "Yes\nNo"
+  },
+  {
+   "default": "None",
+   "fieldname": "auto_open_on_scan",
+   "fieldtype": "Select",
+   "label": "Auto Open on Scan",
+   "options": "None\nId\nName\nModel\nMpn\nBarcode"
+  },
+  {
+   "default": "UTF8",
+   "fieldname": "default_encoding",
+   "fieldtype": "Select",
+   "label": "Default Encoding",
+   "options": "UTF8\n1025\n852"
+  },
+  {
+   "fieldname": "default_label",
+   "fieldtype": "Link",
+   "label": "Default Label",
+   "options": "Discount Label Items"
+  },
+  {
+   "default": "128",
+   "fieldname": "default_barcode",
+   "fieldtype": "Select",
+   "label": "Default Barcode",
+   "options": "128\nEAN13"
+  },
+  {
+   "default": "0",
+   "fieldname": "default_days",
+   "fieldtype": "Int",
+   "label": "Default Days",
+   "non_negative": 1
+  },
+  {
+   "default": "Classic",
+   "fieldname": "bluetooth_type",
+   "fieldtype": "Select",
+   "label": "Bluetooth Type",
+   "options": "Classic\nLow Energy"
+  },
+  {
+   "default": "No",
+   "fieldname": "show_available_stock",
+   "fieldtype": "Select",
+   "label": "Show Available Stock",
+   "options": "Yes\nNo"
+  },
+  {
+   "default": "No",
+   "fieldname": "show_all_products",
+   "fieldtype": "Select",
+   "label": "Show All Products",
+   "options": "Yes\nNo"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-04-03 11:16:25.452558",
+ "modified_by": "Administrator",
+ "module": "Warehouse Management",
+ "name": "UserSettings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
