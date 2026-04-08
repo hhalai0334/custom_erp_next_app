@@ -254,8 +254,15 @@ fixtures = [
     {
         "dt": "DocType",
         "filters": [["module", "=", "Warehouse Management"]]
-    }
+    },
+{
+        "dt": "Workspace",
+        "filters": [["name", "=", "Warehouse Management"]]
+    },
 ]
 override_doctype_class = {
     "Warehouse": "warehouse_management.overrides.warehouse.CustomWarehouse"
 }
+after_install = "warehouse_management.setup.after_install"
+after_migrate = "warehouse_management.setup.after_migrate"
+before_uninstall = "warehouse_management.setup.before_uninstall"
