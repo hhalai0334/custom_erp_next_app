@@ -1,13 +1,16 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-05-11 10:51:50.374367",
+ "creation": "2026-04-08 19:33:32.566390",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "item",
-  "quantity"
+  "quantity",
+  "name1",
+  "barcode",
+  "mpn"
  ],
  "fields": [
   {
@@ -18,7 +21,6 @@
    "in_standard_filter": 1,
    "label": "Item",
    "options": "Item",
-   "read_only": 1,
    "reqd": 1,
    "search_index": 1
   },
@@ -27,12 +29,36 @@
    "fieldtype": "Int",
    "label": "Quantity",
    "reqd": 1
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fetch_if_empty": 1,
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.custom_single_barcode",
+   "fetch_if_empty": 1,
+   "fieldname": "barcode",
+   "fieldtype": "Data",
+   "label": "Barcode",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.custom_mpn",
+   "fetch_if_empty": 1,
+   "fieldname": "mpn",
+   "fieldtype": "Data",
+   "label": "MPN",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-03-31 15:49:24.548295",
+ "modified": "2026-04-09 11:57:15.704502",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Inventory Item",

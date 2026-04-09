@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-08-30 15:26:42.215815",
+ "creation": "2026-04-08 19:33:32.700242",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -15,9 +15,20 @@
   "default_label",
   "default_barcode",
   "default_days",
+  "default_printing_delay",
+  "wifi_ip",
+  "wifi_port",
   "bluetooth_type",
   "show_available_stock",
-  "show_all_products"
+  "show_all_products",
+  "is_show_a1",
+  "is_show_a2",
+  "is_show_a3",
+  "is_show_a4",
+  "name_a1",
+  "name_a2",
+  "name_a3",
+  "name_a4"
  ],
  "fields": [
   {
@@ -107,11 +118,76 @@
    "fieldtype": "Select",
    "label": "Show All Products",
    "options": "Yes\nNo"
+  },
+  {
+   "default": "0",
+   "fieldname": "default_printing_delay",
+   "fieldtype": "Int",
+   "label": "Default Printing Delay",
+   "non_negative": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "wifi_ip",
+   "fieldtype": "Data",
+   "label": "Default Wifi Address",
+   "non_negative": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "wifi_port",
+   "fieldtype": "Data",
+   "label": "Default Wifi Port",
+   "non_negative": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_show_a1",
+   "fieldtype": "Check",
+   "label": "Show A1"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_show_a2",
+   "fieldtype": "Check",
+   "label": "Show A2"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_show_a3",
+   "fieldtype": "Check",
+   "label": "Show A3"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_show_a4",
+   "fieldtype": "Check",
+   "label": "Show A4"
+  },
+  {
+   "fieldname": "name_a1",
+   "fieldtype": "Data",
+   "label": "Name of A1"
+  },
+  {
+   "fieldname": "name_a2",
+   "fieldtype": "Data",
+   "label": "Name of A2"
+  },
+  {
+   "fieldname": "name_a3",
+   "fieldtype": "Data",
+   "label": "Name of A3"
+  },
+  {
+   "fieldname": "name_a4",
+   "fieldtype": "Data",
+   "label": "Name of A4"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-03 11:16:25.452558",
+ "modified": "2026-04-09 11:01:30.181144",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "UserSettings",

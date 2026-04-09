@@ -1,0 +1,92 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"wm-shortcut-1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"App Settings\",\"col\":3}},{\"id\":\"wm-shortcut-2\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item\",\"col\":3}},{\"id\":\"wm-shortcut-3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Inventory\",\"col\":3}},{\"id\":\"wm-shortcut-4\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Warehouse\",\"col\":3}},{\"id\":\"ytz50jvgAj\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User Settings\",\"col\":3}},{\"id\":\"W0kteJ8pwe\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Warehouse Stock\",\"col\":3}},{\"id\":\"G7tvJI06kH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Item Discount\",\"col\":3}},{\"id\":\"JGihlVeKKv\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Discount Labels\",\"col\":3}}]",
+ "creation": "2026-04-04 11:39:22.702301",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "icon": "tool",
+ "idx": 0,
+ "indicator_color": "blue",
+ "is_hidden": 0,
+ "label": "Warehouse Management",
+ "links": [],
+ "modified": "2026-04-09 11:09:54.992102",
+ "modified_by": "Administrator",
+ "module": "Warehouse Management",
+ "name": "Warehouse Management",
+ "number_cards": [],
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "blue",
+   "doc_view": "",
+   "icon": "settings",
+   "label": "App Settings",
+   "link_to": "AppSettings",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "User Settings",
+   "link_to": "UserSettings",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Warehouse Stock",
+   "link_to": "WarehouseStock",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "green",
+   "doc_view": "",
+   "icon": "package",
+   "label": "Item",
+   "link_to": "Item",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Item Discount",
+   "link_to": "Item Discount",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "orange",
+   "doc_view": "",
+   "icon": "list",
+   "label": "Inventory",
+   "link_to": "Inventory",
+   "type": "DocType"
+  },
+  {
+   "color": "red",
+   "doc_view": "",
+   "icon": "home",
+   "label": "Warehouse",
+   "link_to": "Warehouse",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Discount Labels",
+   "link_to": "Discount Labels",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Warehouse Management"
+}
