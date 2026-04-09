@@ -2,13 +2,16 @@
  "actions": [],
  "allow_import": 1,
  "autoname": "format:{item}_{warehouse}",
- "creation": "2026-03-30 11:00:12.790503",
+ "creation": "2026-04-08 19:33:32.849947",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "form_section",
   "warehouse",
   "item",
+  "item_name",
+  "item_barcode",
+  "item_mpn",
   "start_date",
   "end_date",
   "percent",
@@ -73,11 +76,38 @@
    "fieldtype": "Float",
    "label": "Lowest Price",
    "precision": "2"
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fetch_if_empty": 1,
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.custom_single_barcode",
+   "fetch_if_empty": 1,
+   "fieldname": "item_barcode",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Barcode",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item.custom_mpn",
+   "fetch_if_empty": 1,
+   "fieldname": "item_mpn",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item MPN",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-30 16:55:08.419994",
+ "modified": "2026-04-09 12:00:46.687808",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Item Discount",
