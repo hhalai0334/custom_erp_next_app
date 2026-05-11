@@ -15,7 +15,8 @@
   "item_ext_id",
   "stock_qty",
   "available_qty",
-  "price"
+  "price",
+  "whole_sale_price"
  ],
  "fields": [
   {
@@ -94,11 +95,18 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Item ExtId"
+  },
+  {
+   "fieldname": "whole_sale_price",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Wholesale Price",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-09 12:05:39.248090",
+ "modified": "2026-05-11 10:10:10.698329",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "WarehouseStock",
