@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-06-22 17:48:04.186895",
+ "creation": "2026-04-08 19:33:33.019627",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -15,7 +15,7 @@
  ],
  "fields": [
   {
-   "description": "Use the following variables \n{Name},{Model},{Size},{MPN},{Description},{Price},{Barcode},{Id},{Date}, \nUse with Discount Labels {DiscountPrice}, {LowestPrice},{DiscountStartDate},{DiscountEndDate} ",
+   "description": "Use the following variables \n{Name},{Model},{Size},{MPN},{Description},{Price},{WholesalePrice},{Barcode},{Id},{Date}, \nUse with Discount Labels {DiscountPrice}, {LowestPrice},{DiscountStartDate},{DiscountEndDate} ",
    "fieldname": "main_section",
    "fieldtype": "Section Break",
    "label": "Main"
@@ -61,7 +61,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-03-28 09:44:24.490136",
+ "modified": "2026-05-11 12:11:21.345829",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Discount Labels",
