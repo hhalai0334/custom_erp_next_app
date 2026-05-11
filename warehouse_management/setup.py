@@ -30,6 +30,13 @@ def create_workspace():
             "color": "blue",
         },
         {
+            "label": "User Settings",
+            "link_to": "Usersettings",
+            "type": "DocType",
+            "icon": "settings",
+            "color": "blue",
+        },
+        {
             "label": "Item",
             "link_to": "Item",
             "type": "DocType",
@@ -49,6 +56,27 @@ def create_workspace():
             "type": "DocType",
             "icon": "home",
             "color": "red",
+        },
+        {
+            "label": "Warehouse Stock",
+            "link_to": "Warehousestock",
+            "type": "DocType",
+            "icon": "database",
+            "color": "purple",
+        },
+        {
+            "label": "Item Discount",
+            "link_to": "Item Discount",
+            "type": "DocType",
+            "icon": "tag",
+            "color": "yellow",
+        },
+        {
+            "label": "Discount Labels",
+            "link_to": "Discount Labels",
+            "type": "DocType",
+            "icon": "tags",
+            "color": "pink",
         },
     ]
 
@@ -103,12 +131,6 @@ def create_workspace():
             "name": "Pricing",
             "links": [
                 {
-                    "label": "User Settings",
-                    "type": "DocType",
-                    "link_to": "Usersettings",
-                    "description": "Per-user preferences",
-                },
-                {
                     "label": "Item Discount",
                     "type": "DocType",
                     "link_to": "Item Discount",
@@ -126,7 +148,6 @@ def create_workspace():
 
     content = []
 
-    # Shortcuts row
     for index, shortcut in enumerate(shortcuts, start=1):
         content.append(
             {
@@ -139,7 +160,6 @@ def create_workspace():
             }
         )
 
-    # Cards
     for card_index, card in enumerate(cards, start=1):
         content.append(
             {
@@ -183,7 +203,6 @@ def create_workspace():
         }
     )
 
-    # Reset and recreate shortcuts so updates are applied cleanly
     ws.set("shortcuts", [])
 
     for shortcut in shortcuts:
