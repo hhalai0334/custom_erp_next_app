@@ -21,129 +21,146 @@ def before_uninstall():
 def create_workspace():
     name = "Warehouse Management"
 
-    # In ERPNext 15 the entire workspace layout is one JSON blob in `content`
-    content = json.dumps([
-        # ── Shortcuts row ────────────────────────────────────────────────
+    shortcuts = [
         {
-            "id": "wm-shortcut-1",
-            "type": "shortcut",
-            "data": {"shortcut_name": "App Settings",   "col": 3}
+            "label": "App Settings",
+            "link_to": "Appsettings",
+            "type": "DocType",
+            "icon": "settings",
+            "color": "blue",
         },
         {
-            "id": "wm-shortcut-2",
-            "type": "shortcut",
-            "data": {"shortcut_name": "Item",           "col": 3}
+            "label": "Item",
+            "link_to": "Item",
+            "type": "DocType",
+            "icon": "package",
+            "color": "green",
         },
         {
-            "id": "wm-shortcut-3",
-            "type": "shortcut",
-            "data": {"shortcut_name": "Inventory",      "col": 3}
+            "label": "Inventory",
+            "link_to": "Inventory",
+            "type": "DocType",
+            "icon": "list",
+            "color": "orange",
         },
         {
-            "id": "wm-shortcut-4",
-            "type": "shortcut",
-            "data": {"shortcut_name": "Warehouse",      "col": 3}
+            "label": "Warehouse",
+            "link_to": "Warehouse",
+            "type": "DocType",
+            "icon": "home",
+            "color": "red",
         },
+    ]
 
-        # ── Settings card ────────────────────────────────────────────────
+    cards = [
         {
-            "id": "wm-card-settings",
-            "type": "card",
-            "data": {
-                "card_name": "Settings",
-                "col": 4,
-                "links": [
-                    {
-                        "id": "wm-link-appsettings",
-                        "label": "App Settings",
-                        "type": "DocType",
-                        "link_to": "Appsettings",
-                        "description": "Configure global app settings"
-                    },
-                    {
-                        "id": "wm-link-usersettings",
-                        "label": "User Settings",
-                        "type": "DocType",
-                        "link_to": "Usersettings",
-                        "description": "Per-user preferences"
-                    }
-                ]
-            }
+            "name": "Settings",
+            "links": [
+                {
+                    "label": "App Settings",
+                    "type": "DocType",
+                    "link_to": "Appsettings",
+                    "description": "Configure global app settings",
+                },
+                {
+                    "label": "User Settings",
+                    "type": "DocType",
+                    "link_to": "Usersettings",
+                    "description": "Per-user preferences",
+                },
+            ],
         },
-
-        # ── Inventory card ───────────────────────────────────────────────
         {
-            "id": "wm-card-inventory",
-            "type": "card",
-            "data": {
-                "card_name": "Inventory",
-                "col": 4,
-                "links": [
-                    {
-                        "id": "wm-link-item",
-                        "label": "Item",
-                        "type": "DocType",
-                        "link_to": "Item",
-                        "description": "Manage items"
-                    },
-                    {
-                        "id": "wm-link-inventory",
-                        "label": "Inventory List",
-                        "type": "DocType",
-                        "link_to": "Inventory",
-                        "description": "View all inventory entries"
-                    },
-                    {
-                        "id": "wm-link-warehouse",
-                        "label": "Warehouse List",
-                        "type": "DocType",
-                        "link_to": "Warehouse",
-                        "description": "Manage warehouses"
-                    },
-                    {
-                        "id": "wm-link-warehousestock",
-                        "label": "Warehouse Stock",
-                        "type": "DocType",
-                        "link_to": "Warehousestock",
-                        "description": "Stock levels per warehouse"
-                    }
-                ]
-            }
+            "name": "Inventory",
+            "links": [
+                {
+                    "label": "Item",
+                    "type": "DocType",
+                    "link_to": "Item",
+                    "description": "Manage items",
+                },
+                {
+                    "label": "Inventory List",
+                    "type": "DocType",
+                    "link_to": "Inventory",
+                    "description": "View all inventory entries",
+                },
+                {
+                    "label": "Warehouse List",
+                    "type": "DocType",
+                    "link_to": "Warehouse",
+                    "description": "Manage warehouses",
+                },
+                {
+                    "label": "Warehouse Stock",
+                    "type": "DocType",
+                    "link_to": "Warehousestock",
+                    "description": "Stock levels per warehouse",
+                },
+            ],
         },
-
-        # ── Pricing card ─────────────────────────────────────────────────
         {
-            "id": "wm-card-pricing",
-            "type": "card",
-            "data": {
-                "card_name": "Pricing",
-                "col": 4,
-                "links": [
-                    {
-                        "id": "wm-link-usersettings2",
-                        "label": "User Settings",
-                        "type": "DocType",
-                        "link_to": "Usersettings",
-                        "description": "Per-user preferences"
-                    },
-                    {
-                        "id": "wm-link-discount",
-                        "label": "Item Discount",
-                        "type": "DocType",
-                        "link_to": "Item Discount",
-                        "description": "Item-level discounts"
-                    },
-                    {
-                        "id": "wm-link-labels",
-                        "label": "Discount Labels",
-                        "type": "DocType",
-                        "link_to": "Discount Labels",
-                        "description": "Manage discount label definitions"
-                    }
-                ]
+            "name": "Pricing",
+            "links": [
+                {
+                    "label": "User Settings",
+                    "type": "DocType",
+                    "link_to": "Usersettings",
+                    "description": "Per-user preferences",
+                },
+                {
+                    "label": "Item Discount",
+                    "type": "DocType",
+                    "link_to": "Item Discount",
+                    "description": "Item-level discounts",
+                },
+                {
+                    "label": "Discount Labels",
+                    "type": "DocType",
+                    "link_to": "Discount Labels",
+                    "description": "Manage discount label definitions",
+                },
+            ],
+        },
+    ]
+
+    content = []
+
+    # Shortcuts row
+    for index, shortcut in enumerate(shortcuts, start=1):
+        content.append(
+            {
+                "id": f"wm-shortcut-{index}",
+                "type": "shortcut",
+                "data": {
+                    "shortcut_name": shortcut["label"],
+                    "col": 3,
+                },
             }
-        }
-    ])
+        )
+
+    # Cards
+    for card_index, card in enumerate(cards, start=1):
+        content.append(
+            {
+                "id": f"wm-card-{card_index}",
+                "type": "card",
+                "data": {
+                    "card_name": card["name"],
+                    "col": 4,
+                    "links": [
+                        {
+                            "id": f"wm-card-{card_index}-link-{link_index}",
+                            "label": link["label"],
+                            "type": link["type"],
+                            "link_to": link["link_to"],
+                            "description": link.get("description", ""),
+                        }
+                        for link_index, link in enumerate(card["links"], start=1)
+                    ],
+                },
+            }
+        )
 
     if frappe.db.exists("Workspace", name):
         ws = frappe.get_doc("Workspace", name)
@@ -151,49 +168,35 @@ def create_workspace():
         ws = frappe.new_doc("Workspace")
         ws.name = name
 
-    ws.update({
-        "label": name,
-        "title": name,
-        "module": "Warehouse Management",
-        "icon": "tool",
-        "indicator_color": "blue",
-        "is_standard": 1,
-        "public": 1,
-        "short_name": "WM",
-        "sequence_id": 1.0,
-        "content": content,
-    })
+    ws.update(
+        {
+            "label": name,
+            "title": name,
+            "module": "Warehouse Management",
+            "icon": "tool",
+            "indicator_color": "blue",
+            "is_standard": 1,
+            "public": 1,
+            "short_name": "WM",
+            "sequence_id": 1.0,
+            "content": json.dumps(content),
+        }
+    )
 
-    ws.set("shortcuts", [
-        {
-            "label": "App Settings",
-            "link_to": "Appsettings",
-            "type": "DocType",
-            "icon": "settings",
-            "color": "blue"
-        },
-        {
-            "label": "Item",
-            "link_to": "Item",
-            "type": "DocType",
-            "icon": "package",
-            "color": "green"
-        },
-        {
-            "label": "Inventory",
-            "link_to": "Inventory",
-            "type": "DocType",
-            "icon": "list",
-            "color": "orange"
-        },
-        {
-            "label": "Warehouse",
-            "link_to": "Warehouse",
-            "type": "DocType",
-            "icon": "home",
-            "color": "red"
-        },
-    ])
+    # Reset and recreate shortcuts so updates are applied cleanly
+    ws.set("shortcuts", [])
+
+    for shortcut in shortcuts:
+        ws.append(
+            "shortcuts",
+            {
+                "label": shortcut["label"],
+                "link_to": shortcut["link_to"],
+                "type": shortcut["type"],
+                "icon": shortcut["icon"],
+                "color": shortcut["color"],
+            },
+        )
 
     ws.save(ignore_permissions=True)
     frappe.clear_cache()
