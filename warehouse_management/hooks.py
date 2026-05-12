@@ -260,6 +260,11 @@ fixtures = [
         "filters": [["name", "=", "Warehouse Management"]]
     },
 ]
+doc_events = {
+    "Warehouse": {
+        "validate": "warehouse_management.overrides.warehouse.CustomWarehouse.validate_warehouse_price_flags"
+    }
+}
 override_doctype_class = {
     "Warehouse": "warehouse_management.overrides.warehouse.CustomWarehouse"
 }
