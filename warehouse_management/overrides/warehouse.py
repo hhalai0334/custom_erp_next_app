@@ -12,6 +12,9 @@ class CustomWarehouse(Warehouse):
     def autoname(self):
         if not self.custom_warehouse_code:
             frappe.throw("Custom Warehouse Code is required")
-
+        if self.custom_show_warehouse_pricing and self.custom_show_wholesale_price:
+            frappe.throw(
+                _("Only one of Warehouse Pricing or Wholesale Price can be selected.")
+            )
         self.name = self.custom_warehouse_code
         frappe.msgprint(self.name)
