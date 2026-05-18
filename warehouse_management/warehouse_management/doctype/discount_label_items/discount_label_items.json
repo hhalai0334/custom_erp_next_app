@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2025-06-23 00:56:33.482887",
+ "creation": "2026-05-12 15:57:29.481493",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -14,7 +14,8 @@
   "wrap_offset",
   "item_x",
   "item_y",
-  "font_size"
+  "font_size",
+  "font_name"
  ],
  "fields": [
   {
@@ -75,12 +76,17 @@
    "label": "Font Size",
    "options": "0 - Very small (8x12)\n1 - Small (8x16)\n2 - Medium thin (12x20)\n3 - Standard readable (12x24)\n4 - Medium-large (16x32)\n5 - Large bold (24x32)\n6 - Very large (32x48)\n7 - OCR A (14x19)\n8 - OCR B (14x25)",
    "reqd": 1
+  },
+  {
+   "fieldname": "font_name",
+   "fieldtype": "Data",
+   "label": "Font Name"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-04-08 19:40:51.611091",
+ "modified": "2026-05-18 15:59:40.132528",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Discount Label Items",
