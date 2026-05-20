@@ -74,7 +74,7 @@
    "fieldname": "font_size",
    "fieldtype": "Select",
    "label": "Font Size",
-   "options": "0 - Very small (8x12)\n1 - Small (8x16)\n2 - Medium thin (12x20)\n3 - Standard readable (12x24)\n4 - Medium-large (16x32)\n5 - Large bold (24x32)\n6 - Very large (32x48)\n7 - OCR A (14x19)\n8 - OCR B (14x25)",
+   "options": "0 - Very small (8x12)\n1 - Small (8x16)\n2 - Medium thin (12x20)\n3 - Standard readable (12x24)\n4 - Medium-large (16x32)\n5 - Large bold (24x32)\n6 - Very large (32x48)\n7 - OCR A (14x19)\n8 - OCR B (14x25)\n9 - Custom Font\n10 - Custom Font\n11 - Custom Font\n12 - Custom Font\n13 - Custom Font\n14 - Custom Font\n15 - Custom Font\n16 - Custom Font\n17 - Custom Font\n18 - Custom Font\n19 - Custom Font\n20 - Custom Font\n21 - Custom Font\n22 - Custom Font\n23 - Custom Font\n24 - Custom Font\n25 - Custom Font\n26 - Custom Font\n27 - Custom Font\n28 - Custom Font\n29 - Custom Font\n30 - Custom Font",
    "reqd": 1
   },
   {
@@ -86,7 +86,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-05-18 15:59:40.132528",
+ "modified": "2026-05-20 11:40:06.833390",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Discount Label Items",
