@@ -2,13 +2,14 @@
  "actions": [],
  "allow_import": 1,
  "autoname": "format:{item}_{warehouse}",
- "creation": "2026-04-08 19:33:32.849947",
+ "creation": "2026-05-12 15:57:30.130105",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "form_section",
   "warehouse",
   "item",
+  "discount_no",
   "item_name",
   "item_barcode",
   "item_mpn",
@@ -103,11 +104,17 @@
    "in_list_view": 1,
    "label": "Item MPN",
    "read_only": 1
+  },
+  {
+   "fieldname": "discount_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Discount No"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-09 12:00:46.687808",
+ "modified": "2026-05-23 13:12:04.962160",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Item Discount",
