@@ -15,7 +15,7 @@
  ],
  "fields": [
   {
-   "description": "Use the following variables \n{Name},{Model},{Size},{MPN},{Description},{Price},{WholesalePrice},{Barcode},{Id},{Date}, \nUse with Discount Labels {DiscountPrice}, {LowestPrice},{DiscountStartDate},{DiscountEndDate}, {A1}, {A2},{A3},{A4}, {Currency} \n\nAlso keep in mind that all prices will be formated based on the format selected from settings",
+   "description": "Use the following variables \n{Name},{Model},{MPN},{Description},{Price},{WholesalePrice},{Barcode},{Id},{Date}, {A1}, {A2},{A3},{A4}, {Currency}\nUse with Discount Labels {DiscountPrice}, {LowestPrice},{DiscountStartDate},{DiscountEndDate}, {DiscountNot}",
    "fieldname": "main_section",
    "fieldtype": "Section Break",
    "label": "Main"
@@ -61,7 +61,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-05-23 13:45:58.604921",
+ "modified": "2026-05-24 23:17:05.726731",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Discount Labels",
