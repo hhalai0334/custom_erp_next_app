@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-04-08 19:33:32.700242",
+ "creation": "2026-07-11 00:46:27.013241",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -25,6 +25,8 @@
   "is_show_a2",
   "is_show_a3",
   "is_show_a4",
+  "is_show_description2",
+  "is_show_country",
   "name_a1",
   "name_a2",
   "name_a3",
@@ -76,7 +78,7 @@
    "fieldname": "default_encoding",
    "fieldtype": "Select",
    "label": "Default Encoding",
-   "options": "UTF8\n1025\n852"
+   "options": "UTF8\n1250\n852"
   },
   {
    "fieldname": "default_label",
@@ -183,11 +185,23 @@
    "fieldname": "name_a4",
    "fieldtype": "Data",
    "label": "Name of A4"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_show_description2",
+   "fieldtype": "Check",
+   "label": "Show Description 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_show_country",
+   "fieldtype": "Check",
+   "label": "Show Country"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-04-09 11:01:30.181144",
+ "modified": "2026-07-11 00:49:50.049161",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "UserSettings",
