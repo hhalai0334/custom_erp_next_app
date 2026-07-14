@@ -2,19 +2,19 @@
  "actions": [],
  "allow_import": 1,
  "autoname": "format:{item}_{warehouse}",
- "creation": "2026-05-12 15:57:30.130105",
+ "creation": "2026-07-11 14:11:16.862329",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "form_section",
   "warehouse",
   "item",
-  "discount_no",
-  "item_name",
+  "item_name_copy",
   "item_barcode",
   "item_mpn",
   "start_date",
   "end_date",
+  "discount_no",
   "percent",
   "price",
   "lowest_price"
@@ -79,15 +79,6 @@
    "precision": "2"
   },
   {
-   "fetch_from": "item.item_name",
-   "fetch_if_empty": 1,
-   "fieldname": "item_name",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Item Name",
-   "read_only": 1
-  },
-  {
    "fetch_from": "item.custom_single_barcode",
    "fetch_if_empty": 1,
    "fieldname": "item_barcode",
@@ -108,17 +99,26 @@
   {
    "fieldname": "discount_no",
    "fieldtype": "Data",
-   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Discount No"
+  },
+  {
+   "fetch_from": "item.item_name",
+   "fetch_if_empty": 1,
+   "fieldname": "item_name_copy",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Name Copy",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-05-23 13:12:04.962160",
+ "modified": "2026-07-14 19:07:20.616646",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Item Discount",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -134,6 +134,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
