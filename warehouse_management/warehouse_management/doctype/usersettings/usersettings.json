@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-07-11 00:46:27.013241",
+ "creation": "2026-07-11 14:11:16.682354",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -10,8 +10,11 @@
   "to_email",
   "lang",
   "auto_merge",
+  "auto_scan",
   "auto_open_on_scan",
   "default_encoding",
+  "default_currency",
+  "default_price_format",
   "default_label",
   "default_barcode",
   "default_days",
@@ -197,11 +200,32 @@
    "fieldname": "is_show_country",
    "fieldtype": "Check",
    "label": "Show Country"
+  },
+  {
+   "default": "No",
+   "fieldname": "auto_scan",
+   "fieldtype": "Select",
+   "label": "Auto Scan",
+   "options": "Yes\nNo"
+  },
+  {
+   "default": "Symbol",
+   "fieldname": "default_currency",
+   "fieldtype": "Select",
+   "label": "Default Currency",
+   "options": "Symbol\nText"
+  },
+  {
+   "default": "X.xxx,xx",
+   "fieldname": "default_price_format",
+   "fieldtype": "Select",
+   "label": "Default Price Format",
+   "options": "X.xxx,xx\nXxxx,xx\nX,xxxx.xx\nXxxx.xx"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-11 00:49:50.049161",
+ "modified": "2026-07-15 17:56:10.172011",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "UserSettings",
@@ -220,6 +244,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
