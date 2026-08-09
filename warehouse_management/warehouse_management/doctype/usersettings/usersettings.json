@@ -24,6 +24,7 @@
   "bluetooth_type",
   "show_available_stock",
   "show_all_products",
+  "show_old_price",
   "is_show_a1",
   "is_show_a2",
   "is_show_a3",
@@ -221,11 +222,18 @@
    "fieldtype": "Select",
    "label": "Default Price Format",
    "options": "X.xxx,xx\nXxxx,xx\nX,xxxx.xx\nXxxx.xx"
+  },
+  {
+   "default": "No",
+   "fieldname": "show_old_price",
+   "fieldtype": "Select",
+   "label": "Show Old Price",
+   "options": "Yes\nNo"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-15 17:56:10.172011",
+ "modified": "2026-08-05 19:44:44.140263",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "UserSettings",

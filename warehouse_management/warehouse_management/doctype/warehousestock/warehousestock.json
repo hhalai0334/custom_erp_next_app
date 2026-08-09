@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "creation": "2026-04-08 19:33:33.319082",
+ "creation": "2026-07-11 14:11:17.291776",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -16,7 +16,9 @@
   "stock_qty",
   "available_qty",
   "price",
-  "whole_sale_price"
+  "whole_sale_price",
+  "old_price",
+  "old_price_date"
  ],
  "fields": [
   {
@@ -97,16 +99,28 @@
    "label": "Item ExtId"
   },
   {
+   "default": "0",
    "fieldname": "whole_sale_price",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Wholesale Price",
-   "reqd": 1
+   "label": "Wholesale Price"
+  },
+  {
+   "fieldname": "old_price",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Old Price"
+  },
+  {
+   "fieldname": "old_price_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Old Price Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-05-11 10:10:10.698329",
+ "modified": "2026-08-06 20:48:58.455092",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "WarehouseStock",
@@ -125,6 +139,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
