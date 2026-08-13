@@ -263,7 +263,8 @@ fixtures = [
 doc_events = {}
 
 override_doctype_class = {
-    "Warehouse": "warehouse_management.overrides.warehouse.CustomWarehouse"
+    "Warehouse": "warehouse_management.overrides.warehouse.CustomWarehouse",
+    "Data Import": "warehouse_management.overrides.data_import.CustomDataImport"
 }
 after_install = "warehouse_management.setup.after_install"
 after_migrate = "warehouse_management.setup.after_migrate"
