@@ -446,7 +446,14 @@ warehouse_management.tspl = (function () {
 					font = row.font_name.trim();
 					const size = parseIntOr(firstSegment(row.font_size), 24);
 					fontSizeParam = size + "," + size;
-					metrics = { kind: "ttf", name: font, size: size };
+					// For a downloaded TrueType font the two size parameters are a POINT size,
+					// not dots - unlike the built-in scalable font 0, where they are dots.
+					// The app's own printer font test page says so in as many words (it
+					// prints "9pt Test text" at 9,9) and its line pitches bear it out: 6pt to
+					// 7pt is 22 dots, 12pt to 13pt is 39, converging on the 2.82 dots a point
+					// is worth at 203 dpi plus leading. The preview converts with the
+					// selected dpi; drawing the number as dots made every row 2.8x too small.
+					metrics = { kind: "ttf", name: font, size: size, unit: "pt" };
 				} else {
 					// Built-in font: the first segment is the font id, and the builder always
 					// sends 1,1 for the two size parameters.
@@ -479,7 +486,8 @@ warehouse_management.tspl = (function () {
 								"sends 1,1, so this row prints about one dot tall. Give the row a " +
 								"Font Name and a size, or pick a fixed-pitch font (1-8)."
 						);
-						metrics = { kind: "scalable", id: font, size: 1 };
+						// Font 0's parameters are dots, so 1,1 really is one dot.
+						metrics = { kind: "scalable", id: font, size: 1, unit: "dot" };
 					} else {
 						metrics = { kind: "builtin", id: font, cell: spec.cell, ocr: spec.ocr };
 					}

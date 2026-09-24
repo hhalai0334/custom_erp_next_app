@@ -692,7 +692,14 @@ frappe.provide("warehouse_management");
 
 			// A scalable font (id 0, or a downloaded TTF named in Font Name) is drawn
 			// proportionally at the dot size the command asks for.
-			const size = Math.max(1, op.font.size);
+			// A TTF row's size is a point size, so it has to be turned into dots before it
+			// can be drawn on a canvas measured in dots. Font 0's size is already dots.
+			const dotsPerMm = warehouse_management.tspl.DOTS_PER_MM[this.settings.dpi] || 8;
+			const dotsPerInch = dotsPerMm * 25.4;
+			const size =
+				op.font.unit === "pt"
+					? Math.max(1, (op.font.size * dotsPerInch) / 72)
+					: Math.max(1, op.font.size);
 			// Font 0 is condensed; a downloaded TTF is not, so they get different stand-ins.
 			const base = op.font.kind === "ttf" ? PROPORTIONAL_STACK : CONDENSED_STACK;
 			let family = base;
