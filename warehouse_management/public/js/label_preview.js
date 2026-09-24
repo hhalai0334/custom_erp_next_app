@@ -22,8 +22,15 @@ frappe.provide("warehouse_management");
 	// bit. Shapes are approximate; the cell size, spacing and total width are exact.
 	const MONO_STACK = '"DejaVu Sans Mono", Consolas, "Liberation Mono", "Courier New", monospace';
 	const OCR_STACK = '"OCR A Extended", "OCRB", "DejaVu Sans Mono", Consolas, monospace';
+	// Built-in font 0 really is Triumvirate Bold *Condensed*, so a condensed face is the
+	// honest stand-in for it.
+	const CONDENSED_STACK =
+		'"Arial Narrow", "Liberation Sans Narrow", "DejaVu Sans Condensed", sans-serif';
+	// A downloaded TTF is whatever the operator put on the printer, and that is normally a
+	// regular-width face. Standing in for it with a condensed one draws the row narrower
+	// than it prints, which hides text that will actually run off the label.
 	const PROPORTIONAL_STACK =
-		'"Arial Narrow", "Liberation Sans Narrow", "DejaVu Sans Condensed", "Segoe UI", sans-serif';
+		'Arial, "Liberation Sans", "Helvetica Neue", "Segoe UI", sans-serif';
 
 	// Sample product values, keyed like ErpNextMobile Core.DbModels.Product.
 	const DEFAULT_PRODUCT = {
@@ -214,7 +221,11 @@ frappe.provide("warehouse_management");
 			".wm-lp-ctl { display: flex; flex-direction: column; gap: 3px; }",
 			".wm-lp-ctl > label { font-size: var(--text-xs); color: var(--text-muted);",
 			"  margin: 0; text-transform: uppercase; letter-spacing: .04em; }",
-			".wm-lp-ctl select, .wm-lp-ctl input { height: 28px; padding: 0 6px; font-size: var(--text-sm);",
+			// Checkboxes are excluded: the desk styles them with a background image, and
+			// stretching one to a 28px padded box tiles that image into a striped blob.
+			".wm-lp-ctl input[type=\"checkbox\"] { width: 14px; height: 14px; flex: none; margin: 0;",
+			"  padding: 0; accent-color: var(--primary, #2490ef); }",
+			".wm-lp-ctl select, .wm-lp-ctl input:not([type=\"checkbox\"]) { height: 28px; padding: 0 6px; font-size: var(--text-sm);",
 			"  border: 1px solid var(--border-color); border-radius: var(--border-radius); background: var(--control-bg);",
 			"  color: var(--text-color); }",
 			".wm-lp-ctl.wm-lp-check { flex-direction: row; align-items: center; gap: 6px; height: 28px; }",
@@ -654,7 +665,13 @@ frappe.provide("warehouse_management");
 				const cell = op.font.cell;
 				const cw = cell[0];
 				const ch = cell[1];
-				const size = Math.max(4, Math.round(ch * 0.86));
+				// A bitmap dot font fills its cell: an 8x12 glyph really is about 9 dots of
+				// ink tall, with only a dot or two of leading. A browser font at N pixels
+				// puts roughly N pixels between ascender and descender, so the cell height
+				// is the font size. Scaling it down to 0.86 of that - which this used to do
+				// - drew every label a sixth smaller than the head prints it, which on a
+				// thermal label is the difference between legible and not.
+				const size = Math.max(4, ch);
 				ctx.font = size + "px " + (op.font.ocr ? OCR_STACK : MONO_STACK);
 				ctx.textBaseline = "top";
 				const chars = Array.from(op.text);
@@ -676,10 +693,12 @@ frappe.provide("warehouse_management");
 			// A scalable font (id 0, or a downloaded TTF named in Font Name) is drawn
 			// proportionally at the dot size the command asks for.
 			const size = Math.max(1, op.font.size);
-			let family = PROPORTIONAL_STACK;
+			// Font 0 is condensed; a downloaded TTF is not, so they get different stand-ins.
+			const base = op.font.kind === "ttf" ? PROPORTIONAL_STACK : CONDENSED_STACK;
+			let family = base;
 			if (op.font.kind === "ttf") {
 				const named = cssFamilyName(op.font.name);
-				if (named) family = '"' + named + '", ' + PROPORTIONAL_STACK;
+				if (named) family = '"' + named + '", ' + base;
 			}
 			ctx.font = size + "px " + family;
 			ctx.textBaseline = "top";
@@ -855,6 +874,9 @@ frappe.provide("warehouse_management");
 		// dialog has been laid out.
 		setTimeout(() => {
 			new LabelPreview({ frm: frm, wrapper: dialog.fields_dict.preview.$wrapper });
+			// Filling the body after it opened can leave it scrolled a little way down,
+			// which clips the top of the toolbar and its labels. Put it back at the top.
+			dialog.$wrapper.find(".modal-body").scrollTop(0);
 		}, 0);
 	};
 })();
