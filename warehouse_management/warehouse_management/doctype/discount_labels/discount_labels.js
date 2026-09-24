@@ -9,6 +9,20 @@ frappe.ui.form.on("Discount Labels", {
 	refresh(frm) {
 		mount_preview(frm);
 		frm.add_custom_button(__("Preview Label"), () => {
+			// This file is loaded straight from the doctype folder, but the panel comes in
+			// through the doctype_js hook. The two can be out of step - a stale hook cache
+			// leaves this button on a form with nothing behind it - so say what is wrong
+			// rather than throwing a ReferenceError at whoever clicks.
+			if (!assets_loaded()) {
+				frappe.msgprint({
+					title: __("Label preview not loaded"),
+					indicator: "orange",
+					message: __(
+						"The preview scripts did not load. On the server, run <code>bench --site &lt;site&gt; clear-cache</code> and <code>bench restart</code>, then reload this page."
+					),
+				});
+				return;
+			}
 			warehouse_management.show_label_preview_dialog(frm);
 		});
 	},
@@ -43,13 +57,25 @@ frappe.ui.form.on("Discount Label Items", {
 	font_name: refresh_preview,
 });
 
+// The three modules behind the panel arrive via the doctype_js hook in hooks.py. That
+// hook is cached server side, so after it changes the site needs its cache cleared and the
+// process restarted before they appear.
+function assets_loaded() {
+	return !!(
+		window.warehouse_management &&
+		warehouse_management.LabelPreview &&
+		warehouse_management.tspl &&
+		warehouse_management.barcode
+	);
+}
+
 function mount_preview(frm) {
 	const field = frm.fields_dict.label_preview;
 	if (!field) return;
-	if (!window.warehouse_management || !warehouse_management.LabelPreview) {
+	if (!assets_loaded()) {
 		field.$wrapper.html(
 			`<div class="text-muted">${__(
-				"Label preview assets are not loaded. Run bench build and reload."
+				"The label preview scripts did not load. On the server, run <code>bench --site &lt;site&gt; clear-cache</code> and <code>bench restart</code>, then reload this page."
 			)}</div>`
 		);
 		return;
