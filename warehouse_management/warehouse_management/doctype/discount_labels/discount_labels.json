@@ -11,7 +11,9 @@
   "label_height",
   "is_label_discount",
   "label_gap",
-  "item_table"
+  "item_table",
+  "preview_section",
+  "label_preview"
  ],
  "fields": [
   {
@@ -57,6 +59,17 @@
    "fieldtype": "Table",
    "label": "Items",
    "options": "Discount Label Items"
+  },
+  {
+   "fieldname": "preview_section",
+   "fieldtype": "Section Break",
+   "label": "Preview"
+  },
+  {
+   "description": "Rendered from sample data at the printer's own resolution. Edit the sample values to check the layout against a long name or a bigger price.",
+   "fieldname": "label_preview",
+   "fieldtype": "HTML",
+   "label": "Label Preview"
   }
  ],
  "index_web_pages_for_search": 1,

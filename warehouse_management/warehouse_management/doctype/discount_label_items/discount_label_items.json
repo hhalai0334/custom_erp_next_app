@@ -9,6 +9,7 @@
   "main_section",
   "item_select",
   "item_text",
+  "item_image",
   "limit",
   "line_limit",
   "wrap_offset",
@@ -28,28 +29,33 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Type",
-   "options": "Text\nBarcode",
+   "options": "Text\nBarcode\nImage",
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.item_select!=\"Image\"",
+   "description": "The printed content of a Text or Barcode row.",
    "fieldname": "item_text",
    "fieldtype": "Data",
    "label": "Text",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item_select!=\"Image\""
   },
   {
+   "depends_on": "eval:doc.item_select!=\"Image\"",
    "fieldname": "limit",
    "fieldtype": "Int",
    "label": "Limit",
    "non_negative": 1
   },
   {
+   "depends_on": "eval:doc.item_select!=\"Image\"",
    "fieldname": "line_limit",
    "fieldtype": "Int",
    "label": "Line Limit",
    "non_negative": 1
   },
   {
+   "depends_on": "eval:doc.item_select!=\"Image\"",
    "fieldname": "wrap_offset",
    "fieldtype": "Int",
    "label": "Wrap Offset",
@@ -70,17 +76,27 @@
    "reqd": 1
   },
   {
+   "depends_on": "eval:doc.item_select!=\"Image\"",
    "description": "Choose the built-in printer font for this label element. Fonts are identified by numbers or names and differ in size and style.\n\nCommon Font Options:\n\n0 \u2014 Very small (8\u00d712 dots)\n\n1 \u2014 Small, narrow (8\u00d716 dots)\n\n2 \u2014 Medium thin (12\u00d720 dots)\n\n3 \u2014 Standard readable (12\u00d724 dots) \u2705 Recommended\n\n4 \u2014 Medium-large (16\u00d732 dots)\n\n5 \u2014 Large, bold (24\u00d732 dots)\n\n6 \u2014 Very large (32\u00d748 dots)\n\n7 \u2014 OCR A font (14\u00d719 dots)\n\n8 \u2014 OCR B font (14\u00d725 dots)\n\nTSS24.BF2 \u2014 Scalable font (TrueType, if supported by printer)\n\n\ud83d\udda8\ufe0f Font sizes are fixed unless you apply scaling using X and Y multipliers in the layout settings.\n\n\u2139\ufe0f Not all fonts are supported on every printer model. Use font 3 for general-purpose labels.",
    "fieldname": "font_size",
    "fieldtype": "Select",
    "label": "Font Size",
-   "options": "0 - Very small (8x12)\n1 - Small (8x16)\n2 - Medium thin (12x20)\n3 - Standard readable (12x24)\n4 - Medium-large (16x32)\n5 - Large bold (24x32)\n6 - Very large (32x48)\n7 - OCR A (14x19)\n8 - OCR B (14x25)\n9 - Custom Font\n10 - Custom Font\n11 - Custom Font\n12 - Custom Font\n13 - Custom Font\n14 - Custom Font\n15 - Custom Font\n16 - Custom Font\n17 - Custom Font\n18 - Custom Font\n19 - Custom Font\n20 - Custom Font\n21 - Custom Font\n22 - Custom Font\n23 - Custom Font\n24 - Custom Font\n25 - Custom Font\n26 - Custom Font\n27 - Custom Font\n28 - Custom Font\n29 - Custom Font\n30 - Custom Font\n50 - Barcode Height\n80 - Barcode Height\n100 - Barcode Height",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.item_select!=\"Image\"",
+   "options": "0 - Very small (8x12)\n1 - Small (8x16)\n2 - Medium thin (12x20)\n3 - Standard readable (12x24)\n4 - Medium-large (16x32)\n5 - Large bold (24x32)\n6 - Very large (32x48)\n7 - OCR A (14x19)\n8 - OCR B (14x25)\n9 - Custom Font\n10 - Custom Font\n11 - Custom Font\n12 - Custom Font\n13 - Custom Font\n14 - Custom Font\n15 - Custom Font\n16 - Custom Font\n17 - Custom Font\n18 - Custom Font\n19 - Custom Font\n20 - Custom Font\n21 - Custom Font\n22 - Custom Font\n23 - Custom Font\n24 - Custom Font\n25 - Custom Font\n26 - Custom Font\n27 - Custom Font\n28 - Custom Font\n29 - Custom Font\n30 - Custom Font\n50 - Barcode Height\n80 - Barcode Height\n100 - Barcode Height"
   },
   {
+   "depends_on": "eval:doc.item_select!=\"Image\"",
    "fieldname": "font_name",
    "fieldtype": "Data",
    "label": "Font Name"
+  },
+  {
+   "depends_on": "eval:doc.item_select==\"Image\"",
+   "description": "A monochrome .bmp. The app converts it when syncing and sends the picture itself with the label, so nothing has to be loaded into the printer beforehand. The printer prints it dot for dot, so the file's pixel size is its size on the label: at 203 dpi, 8 px is 1 mm. Re-sync the app after changing the image.",
+   "fieldname": "item_image",
+   "fieldtype": "Attach",
+   "label": "Image (.bmp)",
+   "mandatory_depends_on": "eval:doc.item_select==\"Image\""
   }
  ],
  "index_web_pages_for_search": 1,
