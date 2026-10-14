@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2026-09-24 14:04:16.095834",
+ "creation": "2026-10-15 01:25:31.487246",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -26,6 +26,7 @@
   "show_all_products",
   "show_old_price",
   "show_static_price",
+  "default_static_price_date_format",
   "is_show_a1",
   "is_show_a2",
   "is_show_a3",
@@ -244,11 +245,18 @@
    "fieldtype": "Select",
    "label": "Show Static Price",
    "options": "Global\nWarehouse\nNo"
+  },
+  {
+   "default": "dd.mm.yyyy",
+   "fieldname": "default_static_price_date_format",
+   "fieldtype": "Select",
+   "label": "Default Static Price Date Format",
+   "options": "dd.mm.yyyy\ndd.mm.yy\ndd/mm/yyyy\ndd/mm/yy\nmm/dd/yyyy\nmm/dd/yy"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-12 12:47:38.077196",
+ "modified": "2026-10-15 01:33:09.639642",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "UserSettings",
