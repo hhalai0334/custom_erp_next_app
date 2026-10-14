@@ -48,6 +48,8 @@ frappe.ui.form.on("Discount Label Items", {
 	item_select: refresh_preview,
 	item_text: refresh_preview,
 	item_image: refresh_preview,
+	image_width: refresh_preview,
+	image_height: refresh_preview,
 	limit: refresh_preview,
 	line_limit: refresh_preview,
 	wrap_offset: refresh_preview,

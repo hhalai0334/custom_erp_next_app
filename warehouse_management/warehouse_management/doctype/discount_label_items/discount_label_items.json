@@ -10,6 +10,8 @@
   "item_select",
   "item_text",
   "item_image",
+  "image_width",
+  "image_height",
   "limit",
   "line_limit",
   "wrap_offset",
@@ -97,12 +99,28 @@
    "fieldtype": "Attach",
    "label": "Image (.bmp)",
    "mandatory_depends_on": "eval:doc.item_select==\"Image\""
+  },
+  {
+   "depends_on": "eval:doc.item_select==\"Image\"",
+   "description": "Printed width in dots. Leave 0 to print the file at its own size. At 203 dpi, 8 dots is 1 mm.",
+   "fieldname": "image_width",
+   "fieldtype": "Int",
+   "label": "Image Width (dots)",
+   "non_negative": 1
+  },
+  {
+   "depends_on": "eval:doc.item_select==\"Image\"",
+   "description": "Printed height in dots. Leave 0 to keep the aspect ratio of the width, or 0 for both to print the file at its own size.",
+   "fieldname": "image_height",
+   "fieldtype": "Int",
+   "label": "Image Height (dots)",
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-09-24 14:02:49.311575",
+ "modified": "2026-10-14 00:38:03.677514",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Discount Label Items",

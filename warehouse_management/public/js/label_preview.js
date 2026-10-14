@@ -529,6 +529,8 @@ frappe.provide("warehouse_management");
 					item_select: row.item_select,
 					item_text: row.item_text,
 					item_image: row.item_image,
+					image_width: row.image_width,
+					image_height: row.image_height,
 					limit: row.limit,
 					line_limit: row.line_limit,
 					wrap_offset: row.wrap_offset,
@@ -749,23 +751,27 @@ frappe.provide("warehouse_management");
 				return pending;
 			}
 
-			ctx.drawImage(entry.img, op.x, op.y);
-			return { x: op.x, y: op.y, w: entry.img.naturalWidth, h: entry.img.naturalHeight };
+			// Image Width and Height resample the picture, so draw it at the size it will be
+			// packed at rather than the file's own. The 1-bit pass that follows then shows
+			// what the resampling costs: a logo squeezed to half its width loses thin
+			// strokes here exactly as it will on the label.
+			const w = op.width > 0 ? op.width : entry.img.naturalWidth;
+			const h = op.height > 0 ? op.height : entry.img.naturalHeight;
+			ctx.drawImage(entry.img, op.x, op.y, w, h);
+			return { x: op.x, y: op.y, w: w, h: h };
 		}
 
-		// The BITMAP command declares its payload's size, which is only known once the file
-		// has been decoded. Each row is padded out to whole bytes, the same packing the
-		// mobile app does when it converts the .bmp during sync.
+		// The file's own size in dots, which is what a row with Image Width and Height left
+		// at 0 prints at, and what the aspect ratio is worked out from. Only known once the
+		// browser has decoded the file, so the renderer has to cope with it being absent.
 		decodedImageSizes() {
 			const sizes = {};
 			Object.keys(this.images).forEach((src) => {
 				const entry = this.images[src];
 				if (entry.state !== "ok") return;
-				const widthBytes = Math.ceil(entry.img.naturalWidth / 8);
 				sizes[src] = {
-					widthBytes: widthBytes,
+					widthDots: entry.img.naturalWidth,
 					heightDots: entry.img.naturalHeight,
-					byteCount: widthBytes * entry.img.naturalHeight,
 				};
 			});
 			return sizes;

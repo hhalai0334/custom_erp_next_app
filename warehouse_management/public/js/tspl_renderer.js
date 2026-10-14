@@ -540,23 +540,31 @@ warehouse_management.tspl = (function () {
 				// and splices the payload in at print time, so nothing has to be pre-loaded
 				// into the printer's memory and a swapped printer needs no setup.
 				//
-				// Sizes come from the decoded file, so they are only known once the preview
-				// has loaded it; until then the header is shown with the dimensions pending.
-				const size = (o.imageSizes || {})[row.item_image];
+				// BITMAP has no scale parameter, so Image Width and Image Height are not a
+				// print-time instruction - the picture is resampled to that many dots before
+				// it is packed, by the app during sync and by the canvas here. The natural
+				// size is only known once the file has been decoded, so a row that leaves
+				// both at 0 shows its dimensions as pending until then.
+				const natural = (o.imageSizes || {})[row.item_image];
+				const target = resolveImageSize(row.image_width, row.image_height, natural);
 				if (!row.item_image) {
 					warnings.push("Row " + (index + 1) + ": no image is attached, so nothing prints.");
 				}
+
+				const widthBytes = target ? Math.ceil(target.widthDots / 8) : 0;
 				lines.push(
 					"BITMAP " +
 						x +
 						"," +
 						y +
 						"," +
-						(size ? size.widthBytes : "?") +
+						(target ? widthBytes : "?") +
 						"," +
-						(size ? size.heightDots : "?") +
+						(target ? target.heightDots : "?") +
 						",0," +
-						(size ? "<" + size.byteCount + " bytes of bitmap>" : "<image not loaded>")
+						(target
+							? "<" + widthBytes * target.heightDots + " bytes of bitmap>"
+							: "<image not loaded>")
 				);
 				ops.push({
 					type: "image",
@@ -565,6 +573,10 @@ warehouse_management.tspl = (function () {
 					y: y,
 					src: row.item_image || "",
 					name: imageName(row),
+					width: target ? target.widthDots : 0,
+					height: target ? target.heightDots : 0,
+					resized: !!(target && natural &&
+						(target.widthDots !== natural.widthDots || target.heightDots !== natural.heightDots)),
 				});
 				imageRows.push(index + 1);
 			} else if (kind) {
@@ -607,6 +619,38 @@ warehouse_management.tspl = (function () {
 		return arr.filter(function (v, i) {
 			return arr.indexOf(v) === i;
 		});
+	}
+
+	// What the picture will actually be resampled to, in dots.
+	//
+	// 0 means "take it from the file". Setting one axis and leaving the other at 0 keeps
+	// the aspect ratio, which is what someone fitting a logo to a column width means; it
+	// also stops a half-filled row from printing a stretched picture. Returns null while
+	// the natural size is still unknown and the row has not pinned both axes itself.
+	function resolveImageSize(requestedWidth, requestedHeight, natural) {
+		const rw = Math.max(0, Math.round(Number(requestedWidth) || 0));
+		const rh = Math.max(0, Math.round(Number(requestedHeight) || 0));
+
+		const haveNatural = !!(natural && natural.widthDots > 0 && natural.heightDots > 0);
+		if (!haveNatural) {
+			return rw > 0 && rh > 0 ? { widthDots: rw, heightDots: rh } : null;
+		}
+		if (rw <= 0 && rh <= 0) {
+			return { widthDots: natural.widthDots, heightDots: natural.heightDots };
+		}
+		if (rw > 0 && rh <= 0) {
+			return {
+				widthDots: rw,
+				heightDots: Math.max(1, Math.round((natural.heightDots * rw) / natural.widthDots)),
+			};
+		}
+		if (rw <= 0 && rh > 0) {
+			return {
+				widthDots: Math.max(1, Math.round((natural.widthDots * rh) / natural.heightDots)),
+				heightDots: rh,
+			};
+		}
+		return { widthDots: rw, heightDots: rh };
 	}
 
 	// The name PUTBMP refers to the file by: Item Text when the row sets one, otherwise the
@@ -680,6 +724,7 @@ warehouse_management.tspl = (function () {
 		formatNumber: formatNumber,
 		evaluatePlaceholderMath: evaluatePlaceholderMath,
 		splitTextByCharLimit: splitTextByCharLimit,
+		resolveImageSize: resolveImageSize,
 		sanitizeForTspl: sanitizeForTspl,
 	};
 })();
