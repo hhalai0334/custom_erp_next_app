@@ -2,7 +2,7 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "creation": "2026-07-11 14:11:17.291776",
+ "creation": "2026-09-24 14:04:16.719129",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
@@ -18,7 +18,9 @@
   "price",
   "whole_sale_price",
   "old_price",
-  "old_price_date"
+  "old_price_date",
+  "static_price",
+  "static_price_date"
  ],
  "fields": [
   {
@@ -116,11 +118,23 @@
    "fieldtype": "Date",
    "in_list_view": 1,
    "label": "Old Price Date"
+  },
+  {
+   "fieldname": "static_price",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Static Price"
+  },
+  {
+   "fieldname": "static_price_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Static Price Date"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-06 20:48:58.455092",
+ "modified": "2026-10-12 01:40:14.198032",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "WarehouseStock",
