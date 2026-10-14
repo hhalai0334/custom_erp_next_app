@@ -20,6 +20,12 @@ const GRID_COLUMNS = { item_select: 2, item_text: 4, item_x: 1, item_y: 1, font_
 const GRID_EXCLUDE = ["item_image"];
 
 frappe.ui.form.on("Discount Labels", {
+	// The grid applies its saved column settings while the form renders, which can be after
+	// refresh runs, so the column fix is applied from both hooks.
+	onload_post_render(frm) {
+		ensure_grid_columns(frm);
+	},
+
 	refresh(frm) {
 		ensure_grid_columns(frm);
 		mount_preview(frm);
