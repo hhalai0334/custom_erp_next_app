@@ -12,6 +12,13 @@
 // columns from the grid's settings keeps them either way.
 const GRID_COLUMNS = { item_select: 2, item_text: 4, item_x: 1, item_y: 1, font_size: 2 };
 
+// An Attach field cannot work as a grid column on this doctype. The grid does not
+// re-evaluate depends_on per row when it first renders, so the attach button is drawn on
+// every row including Text ones, where it covers the Text cell and swallows the click.
+// Opening and closing the row editor is what finally applies depends_on and makes it go
+// away - which is exactly the reported symptom. It stays fully editable in the row editor.
+const GRID_EXCLUDE = ["item_image"];
+
 frappe.ui.form.on("Discount Labels", {
 	refresh(frm) {
 		ensure_grid_columns(frm);
@@ -84,21 +91,48 @@ function ensure_grid_columns(frm) {
 	const grid = field && field.grid;
 	if (!grid || !grid.docfields) return;
 
-	// Columns the user picked themselves win; this is only a default.
-	if (grid.user_defined_columns && grid.user_defined_columns.length) return;
-
 	let changed = false;
-	Object.keys(GRID_COLUMNS).forEach((fieldname) => {
-		const df = grid.docfields.find((d) => d.fieldname === fieldname);
-		if (!df || df.in_list_view) return;
-		try {
-			grid.update_docfield_property(fieldname, "in_list_view", 1);
-			grid.update_docfield_property(fieldname, "columns", GRID_COLUMNS[fieldname]);
-			changed = true;
-		} catch (e) {
-			// This site's doctype does not have the field yet; nothing to widen.
+	const hasUserColumns = !!(grid.user_defined_columns && grid.user_defined_columns.length);
+
+	// Dropped whether the columns came from the doctype or from the user's own Configure
+	// Columns choice: this one is not a preference, it stops the row being editable.
+	GRID_EXCLUDE.forEach((fieldname) => {
+		if (hasUserColumns) {
+			const kept = grid.user_defined_columns.filter((d) => d.fieldname !== fieldname);
+			if (kept.length !== grid.user_defined_columns.length) {
+				grid.user_defined_columns = kept;
+				changed = true;
+			}
 		}
+		const df = grid.docfields.find((d) => d.fieldname === fieldname);
+		if (!df || !df.in_list_view) return;
+		// Set on the docfield directly as well: update_docfield_property returns early
+		// when the grid has no rows yet, and this has to hold for rows added later.
+		df.in_list_view = 0;
+		try {
+			grid.update_docfield_property(fieldname, "in_list_view", 0);
+		} catch (e) {
+			// No existing rows to update, or not on this site's doctype.
+		}
+		changed = true;
 	});
+
+	// Columns the user picked themselves otherwise win; the rest is only a default.
+	if (!hasUserColumns) {
+		Object.keys(GRID_COLUMNS).forEach((fieldname) => {
+			const df = grid.docfields.find((d) => d.fieldname === fieldname);
+			if (!df || df.in_list_view) return;
+			df.in_list_view = 1;
+			df.columns = GRID_COLUMNS[fieldname];
+			try {
+				grid.update_docfield_property(fieldname, "in_list_view", 1);
+				grid.update_docfield_property(fieldname, "columns", GRID_COLUMNS[fieldname]);
+			} catch (e) {
+				// No existing rows to update; the docfield change above covers new ones.
+			}
+			changed = true;
+		});
+	}
 
 	if (!changed) return;
 	// setup_visible_columns caches its result and refresh() does not clear it, so the new
