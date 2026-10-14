@@ -5,8 +5,16 @@
 // the printed result changes. The panel itself lives in public/js/label_preview.js and is
 // loaded through the doctype_js hook.
 
+// Only a field marked in_list_view is editable by clicking its cell in the grid;
+// everything else is reachable solely through the row editor. The doctype marks these, but
+// that only reaches a site once the doctype itself reloads, so they are applied here too.
+// Once the doctype has caught up this becomes a no-op, and a user who has chosen their own
+// columns from the grid's settings keeps them either way.
+const GRID_COLUMNS = { item_select: 2, item_text: 4, item_x: 1, item_y: 1, font_size: 2 };
+
 frappe.ui.form.on("Discount Labels", {
 	refresh(frm) {
+		ensure_grid_columns(frm);
 		mount_preview(frm);
 		frm.add_custom_button(__("Preview Label"), () => {
 			// This file is loaded straight from the doctype folder, but the panel comes in
@@ -69,6 +77,34 @@ function assets_loaded() {
 		warehouse_management.tspl &&
 		warehouse_management.barcode
 	);
+}
+
+function ensure_grid_columns(frm) {
+	const field = frm.fields_dict.item_table;
+	const grid = field && field.grid;
+	if (!grid || !grid.docfields) return;
+
+	// Columns the user picked themselves win; this is only a default.
+	if (grid.user_defined_columns && grid.user_defined_columns.length) return;
+
+	let changed = false;
+	Object.keys(GRID_COLUMNS).forEach((fieldname) => {
+		const df = grid.docfields.find((d) => d.fieldname === fieldname);
+		if (!df || df.in_list_view) return;
+		try {
+			grid.update_docfield_property(fieldname, "in_list_view", 1);
+			grid.update_docfield_property(fieldname, "columns", GRID_COLUMNS[fieldname]);
+			changed = true;
+		} catch (e) {
+			// This site's doctype does not have the field yet; nothing to widen.
+		}
+	});
+
+	if (!changed) return;
+	// setup_visible_columns caches its result and refresh() does not clear it, so the new
+	// columns only appear once that cache is dropped.
+	grid.visible_columns = null;
+	grid.refresh();
 }
 
 function mount_preview(frm) {
