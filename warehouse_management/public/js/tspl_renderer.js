@@ -360,6 +360,19 @@ warehouse_management.tspl = (function () {
 			numericValues.LowestPrice = Number(discount.LowestPrice) || 0;
 		}
 
+		// Only a product that actually has a static price contributes one, so {StaticPrice}*2
+		// on a product without one is left unevaluated rather than quietly reading as zero.
+		const staticPrice =
+			product.StaticPrice === null ||
+			product.StaticPrice === undefined ||
+			product.StaticPrice === "" ||
+			!(Number(product.StaticPrice) > 0)
+				? null
+				: Number(product.StaticPrice);
+		if (staticPrice !== null) {
+			numericValues.StaticPrice = staticPrice;
+		}
+
 		const currencyText = o.currencyMode === "Text" ? o.currencyName : o.currencySymbol;
 		const rows = doc.item_table || [];
 		const imageRows = [];
@@ -390,8 +403,18 @@ warehouse_management.tspl = (function () {
 			text = replaceAll(text, "{Description}", flatten(product.Description));
 			text = replaceAll(text, "{Description2}", flatten(product.Description2));
 			text = replaceAll(text, "{Country}", product.Country);
-			text = replaceAll(text, "{Date}", formatShortDateTime(new Date()));
 			text = replaceAll(text, "Đ", "D");
+
+			// With no static price to print, the placeholder is blanked and the rest of the
+			// row prints as written - the same as the builder does.
+			text = replaceAll(
+				text,
+				"{StaticPrice}",
+				staticPrice === null ? "" : formatNumber(staticPrice, o.priceFormat)
+			);
+
+			text = replaceDate(text, "Date", new Date(), "g");
+			text = replaceDate(text, "StaticPriceDate", parseLocalDate(product.StaticPriceDate), "d");
 
 			if (discount) {
 				text = replaceAll(text, "{DiscountPrice}", formatNumber(discount.Price, o.priceFormat));
@@ -400,14 +423,16 @@ warehouse_management.tspl = (function () {
 					"{LowestPrice}",
 					formatNumber(discount.LowestPrice, o.priceFormat)
 				);
-				text = replaceAll(text, "{DiscountEndDate}", formatShortDate(discount.EndDate));
-				text = replaceAll(text, "{DiscountStartDate}", formatShortDate(discount.StartDate));
 				text = replaceAll(text, "{DiscountNo}", discount.DiscountNo || "");
+				text = replaceDate(text, "DiscountEndDate", parseLocalDate(discount.EndDate), "d");
+				text = replaceDate(text, "DiscountStartDate", parseLocalDate(discount.StartDate), "d");
 			}
 
 			// Split the leftovers by cause. Telling someone their typo needs the Discount
 			// box ticked sends them somewhere that cannot help.
-			const leftover = text.match(/\{[A-Za-z0-9_]+\}/g);
+			// Also catches the {Name:format} form, so a mistyped date placeholder is
+			// reported rather than printed verbatim.
+			const leftover = text.match(/\{[A-Za-z0-9_]+(?::[^{}]*)?\}/g);
 			if (leftover) {
 				const names = unique(leftover);
 				const needsDiscount = names.filter(isDiscountPlaceholder);
@@ -611,7 +636,9 @@ warehouse_management.tspl = (function () {
 		"{DiscountNo}",
 	];
 
-	function isDiscountPlaceholder(name) {
+	function isDiscountPlaceholder(token) {
+		// {DiscountEndDate:dd.MM.yyyy} is the same placeholder as {DiscountEndDate}.
+		const name = "{" + token.replace(/^\{|\}$/g, "").split(":")[0] + "}";
 		return DISCOUNT_PLACEHOLDERS.indexOf(name) !== -1;
 	}
 
@@ -680,6 +707,142 @@ warehouse_management.tspl = (function () {
 	function parseIntOr(value, fallback) {
 		const n = parseInt(value, 10);
 		return isNaN(n) ? fallback : n;
+	}
+
+	/* ------------------------------------------------------------------ *
+	 * Date placeholders - port of ReplaceDate
+	 *
+	 * {Name} prints the default format; {Name:dd.MM.yyyy} prints a custom one. A missing
+	 * date blanks the placeholder entirely rather than leaving it on the label. Y and D are
+	 * folded to lower case so DD.MM.YYYY works, which is what most people type.
+	 * ------------------------------------------------------------------ */
+
+	// Longest first within each letter, so dd is preferred over d.
+	const DATE_TOKENS = [
+		"yyyy", "yyy", "yy", "y",
+		"MMMM", "MMM", "MM", "M",
+		"dddd", "ddd", "dd", "d",
+		"HH", "H", "hh", "h",
+		"mm", "m", "ss", "s",
+		"fff", "ff", "f", "tt", "t",
+	];
+
+	function replaceDate(text, name, date, defaultFormat) {
+		const pattern = new RegExp("\\{" + name + "(?::([^{}]*))?\\}", "g");
+		return (text || "").replace(pattern, function (whole, requested) {
+			if (!date) return "";
+			const format = String(requested || "").replace(/Y/g, "y").replace(/D/g, "d");
+			return format.length === 0 ? standardDate(date, defaultFormat) : customDate(date, format);
+		});
+	}
+
+	function standardDate(d, format) {
+		// "g" is short date plus short time, "d" short date. The preview uses the browser
+		// locale where the builder uses the device's, for the same reason: a stand-in.
+		if (format === "g") {
+			return (
+				d.toLocaleDateString() +
+				" " +
+				d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+			);
+		}
+		return d.toLocaleDateString();
+	}
+
+	function customDate(d, format) {
+		let out = "";
+		let i = 0;
+		while (i < format.length) {
+			const ch = format[i];
+
+			// \x and 'literal' both escape, as they do in .NET custom formats.
+			if (ch === "\\" && i + 1 < format.length) {
+				out += format[i + 1];
+				i += 2;
+				continue;
+			}
+			if (ch === "'" || ch === '"') {
+				const close = format.indexOf(ch, i + 1);
+				if (close < 0) {
+					out += format.slice(i + 1);
+					break;
+				}
+				out += format.slice(i + 1, close);
+				i = close + 1;
+				continue;
+			}
+
+			let token = null;
+			for (let t = 0; t < DATE_TOKENS.length; t++) {
+				if (DATE_TOKENS[t][0] === ch && format.startsWith(DATE_TOKENS[t], i)) {
+					token = DATE_TOKENS[t];
+					break;
+				}
+			}
+			if (token === null) {
+				// Separators and anything else print as written. The builder formats with
+				// the invariant culture precisely so / and : are not swapped for the
+				// phone's own separators.
+				out += ch;
+				i++;
+				continue;
+			}
+			out += formatDateToken(d, token);
+			i += token.length;
+		}
+		return out;
+	}
+
+	function formatDateToken(d, token) {
+		const pad = (n, width) => String(n).padStart(width, "0");
+		const hour12 = ((d.getHours() + 11) % 12) + 1;
+		switch (token) {
+			case "yyyy": return pad(d.getFullYear(), 4);
+			case "yyy": return pad(d.getFullYear(), 3);
+			case "yy": return pad(d.getFullYear() % 100, 2);
+			case "y": return String(d.getFullYear() % 100);
+			// Month and day names come out English because the builder formats them with
+			// the invariant culture.
+			case "MMMM": return d.toLocaleString("en-US", { month: "long" });
+			case "MMM": return d.toLocaleString("en-US", { month: "short" });
+			case "MM": return pad(d.getMonth() + 1, 2);
+			case "M": return String(d.getMonth() + 1);
+			case "dddd": return d.toLocaleString("en-US", { weekday: "long" });
+			case "ddd": return d.toLocaleString("en-US", { weekday: "short" });
+			case "dd": return pad(d.getDate(), 2);
+			case "d": return String(d.getDate());
+			case "HH": return pad(d.getHours(), 2);
+			case "H": return String(d.getHours());
+			case "hh": return pad(hour12, 2);
+			case "h": return String(hour12);
+			case "mm": return pad(d.getMinutes(), 2);
+			case "m": return String(d.getMinutes());
+			case "ss": return pad(d.getSeconds(), 2);
+			case "s": return String(d.getSeconds());
+			case "fff": return pad(d.getMilliseconds(), 3);
+			case "ff": return pad(Math.floor(d.getMilliseconds() / 10), 2);
+			case "f": return String(Math.floor(d.getMilliseconds() / 100));
+			case "tt": return d.getHours() < 12 ? "AM" : "PM";
+			case "t": return d.getHours() < 12 ? "A" : "P";
+			default: return token;
+		}
+	}
+
+	// A bare YYYY-MM-DD is parsed by Date as UTC midnight, which renders as the previous
+	// day everywhere west of UTC, so pull the parts out and build a local date instead.
+	// These are calendar dates with no timezone attached.
+	function parseLocalDate(value) {
+		if (value instanceof Date) return isNaN(value.getTime()) ? null : value;
+		const text = String(value == null ? "" : value).trim();
+		if (!text) return null;
+
+		const ymd = text.match(/^(\d{4})-(\d{2})-(\d{2})/);
+		if (ymd) {
+			const local = new Date(Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3]));
+			return isNaN(local.getTime()) ? null : local;
+		}
+		const parsed = new Date(text);
+		return isNaN(parsed.getTime()) ? null : parsed;
 	}
 
 	// C# "g" - short date plus short time in the device culture. The preview uses the

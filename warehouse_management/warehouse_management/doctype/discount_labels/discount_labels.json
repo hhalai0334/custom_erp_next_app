@@ -17,7 +17,7 @@
  ],
  "fields": [
   {
-   "description": "Use the following variables \n{Name},{Name2},{Model},{Size},{MPN},{Description},{Price},{WholesalePrice},{Barcode},{Id},{Date},{Description2}, {Country}, {OldPrice},{StaticPrice},{StaticPriceDate} \nUse with Discount Labels {DiscountPrice}, {LowestPrice},{DiscountStartDate},{DiscountEndDate} ",
+   "description": "Use the following variables\n{Name}, {Name2}, {Model}, {Size}, {MPN}, {Description}, {Description2}, {Country}, {Id}, {Barcode}, {ExternalId}, {Currency}, {A1}, {A2}, {A3}, {A4}\nPrices: {Price}, {WholesalePrice}, {OldPrice}, {StaticPrice}\nDates: {Date}, {StaticPriceDate}\nUse with Discount Labels: {DiscountPrice}, {LowestPrice}, {DiscountNo}, {DiscountStartDate}, {DiscountEndDate}\n\nDATE FORMATS\nAny date placeholder takes an optional format after a colon, for example {StaticPriceDate:dd.MM.yyyy}. Without one, dates print in the phone's short format.\ndd = day 01-31, d = day 1-31\nMM = month 01-12, M = month 1-12, MMM = Jan, MMMM = January\nyyyy = 2026, yy = 26\nHH = hour 00-23, mm = minutes, ss = seconds\nUpper case DD and YYYY work too. Anything else prints as written, so {DiscountEndDate:dd/MM/yyyy} and {DiscountEndDate:dd-MM-yyyy} both work. To print a letter literally, wrap it in single quotes: {StaticPriceDate:'od' dd.MM.yyyy}\nA placeholder whose date is empty prints nothing at all.\n\nMATHS\nPrice placeholders can be used in arithmetic with + - * / and brackets, for example {Price}*0.8 or (1-{DiscountPrice}/{Price})*100",
    "fieldname": "main_section",
    "fieldtype": "Section Break",
    "label": "Main"
@@ -74,7 +74,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-12 12:49:36.887633",
+ "modified": "2026-10-15 00:33:58.302325",
  "modified_by": "Administrator",
  "module": "Warehouse Management",
  "name": "Discount Labels",

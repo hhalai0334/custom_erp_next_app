@@ -48,6 +48,10 @@ frappe.provide("warehouse_management");
 		Price: 129.99,
 		WholesalePrice: 89.5,
 		OldPrice: 159.99,
+		// Stands for the price the app resolves from the Show Static Price setting
+		// (global or per warehouse). Blank it to see what a product without one prints.
+		StaticPrice: 149.99,
+		StaticPriceDate: "2026-06-01",
 		Description: "Majica od 100% pamuka, kratki rukav, unisex kroj",
 		Description2: "Made in EU",
 		Country: "Hrvatska",
@@ -157,6 +161,8 @@ frappe.provide("warehouse_management");
 		{ key: "Price", label: "Price", type: "number" },
 		{ key: "WholesalePrice", label: "Wholesale Price", type: "number" },
 		{ key: "OldPrice", label: "Old Price", type: "number" },
+		{ key: "StaticPrice", label: "Static Price", type: "number" },
+		{ key: "StaticPriceDate", label: "Static Price Date", type: "date" },
 		{ key: "Country", label: "Country", type: "text" },
 		{ key: "Description", label: "Description", type: "text" },
 		{ key: "Description2", label: "Description 2", type: "text" },
