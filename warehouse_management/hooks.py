@@ -43,7 +43,20 @@ app_license = "unlicense"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"doctype" : "public/js/warehouse.js"}
+# These are read off disk and inlined into the form's JS, so no bundling step is
+# needed — order matters, the preview panel uses the two modules above it.
+doctype_js = {
+	"Discount Labels": [
+		"public/js/tspl_renderer.js",
+		"public/js/barcode_encoder.js",
+		"public/js/label_preview.js",
+	],
+	# public/warehouse.js has never been loaded: the entry here was the boilerplate
+	# placeholder key "doctype" and pointed at public/js/warehouse.js, which does not
+	# exist. Uncommenting the line below activates its mutually-exclusive check on
+	# Warehouse Pricing / Wholesale Price, so it is left off until that is wanted.
+	# "Warehouse": "public/warehouse.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
